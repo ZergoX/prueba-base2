@@ -1,4 +1,5 @@
 import { GET } from '@/app/api/dog/route'
+import { DogTableResponseSchema } from '@/schemas/response'
 import { NextRequest } from 'next/server'
 
 describe('GET /api/dog', () => {
@@ -11,13 +12,6 @@ describe('GET /api/dog', () => {
     const data = await response.json()
 
     expect(response.status).toBe(200)
-    expect(data).toMatchObject({
-      data: {
-        pagination: {
-          current: expect.any(Number)
-        },
-        dogs: expect.any(Array),
-      }
-    })
+    expect(() => DogTableResponseSchema.parse(data)).not.toThrow() 
   })
 })

@@ -7,8 +7,7 @@ export const GET = async (request: NextRequest) => {
 	const pageSize = request.nextUrl.searchParams.get('pageSize')
 	const pageNumber = request.nextUrl.searchParams.get('pageNumber')
 
-	const response = await Dogs.getInfoDogs(pageSize ?? undefined, pageNumber ?? undefined)
+	const response = await Dogs.getInfoDogs(pageSize ?? '10', pageNumber ?? '1')
 
 	return NextResponse.json(response)
-
 }

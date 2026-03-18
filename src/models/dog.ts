@@ -1,26 +1,25 @@
-import { DogInformation, DogTableInfo } from "@/schemas/dog";
+import { DogInformation, DogTableInfo, DogTablePagination } from "@/schemas/dog";
 import { getAllDogs, getDog } from "@/services/dog";
-
-
-export type DogPagination = {current: number, last?: number, first?: number}
 
 export class Dogs {
 
-	static async getInfoDogs (pageSize?: string, pageNumber?: string) {
+	static async getInfoDogs (pageSize: string, pageNumber: string) {
 		try {
 			const {data, error} = await getAllDogs(pageNumber, pageSize)
 			
 			if (error) throw new Error(error)
 			
-			const response:{ 
-				pagination: DogPagination, 
+			const response: { 
+				pagination: DogTablePagination, 
 				dogs: DogTableInfo[] 
-			} = { pagination: {
-				current: data?.meta.pagination.current ?? 1,
-				first: data?.meta.pagination.first,
-				last: data?.meta.pagination.last,
-
-			}, dogs:[  ]}
+			} = { 
+				pagination: {
+					current: data?.meta.pagination.current ?? 1,
+					first: data?.meta.pagination.first ?? 0,
+					last: data?.meta.pagination.last,
+				}, 
+				dogs:[]
+			}
 
 			data?.data.forEach((e) => (
 				response.dogs.push({

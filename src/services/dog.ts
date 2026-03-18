@@ -44,13 +44,13 @@ const axiosRequest = async <T> (config: AxiosRequestConfig) => {
 	} )
 }
 
-export const getAllDogs = async (pageNumber?: string,  pageQuery?: string) => {
+export const getAllDogs = async (pageNumber: string,  pageQuery: string) => {
 	const axiosConfig: AxiosRequestConfig= {
 		method: 'GET',
 		baseURL: `${process.env.DOG_API}/breeds`,
 		params: {
-			...(pageNumber !== undefined && { "page[number]": pageNumber }),
-    	...(pageQuery !== undefined && { "page[size]": pageQuery }),
+			"page[number]": pageNumber,
+    	"page[size]": pageQuery,
 		}
 	}
 

@@ -1,5 +1,6 @@
 import { GET } from '@/app/api/dog/[id]/route'
 import { DogInfoSchema } from '@/schemas/dog'
+import { DogInfoResponseSchema } from '@/schemas/response'
 import { NextRequest } from 'next/server'
 
 
@@ -28,15 +29,7 @@ describe('GET /api/dog/[id]', () => {
 			const data = await response.json()
 
 			expect(response.status).toBe(e.status)
-
-			if (response.status === 200) {
-        // data cumple con DogInfoSchema
-        expect(() => DogInfoSchema.parse(data)).not.toThrow()
-      } else if (response.status === 404) {
-        // data es { error: string }
-        expect(data).toHaveProperty('error')
-        expect(typeof data.error).toBe('string')
-      }
+			expect(() => DogInfoResponseSchema.parse(data)).not.toThrow()
 		})
 	})
 })
