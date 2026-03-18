@@ -1,0 +1,19 @@
+import { Dogs } from "@/models/dog"
+import { NextRequest, NextResponse } from "next/server"
+
+export const GET = async (
+  request: NextRequest,
+  { params }: WithParams<{id: string}>,
+) => {
+  
+  const { id } = await params
+
+  if (id === 'no')
+    return NextResponse.json({error: 'La consulta no se puede realizar'}, {status: 400})
+
+  const { data, error } = await Dogs.getDogById(id)
+
+  const response = data ? data : {error: error}
+
+  return NextResponse.json(response, { status: data ? 200 : 404 } )
+}
