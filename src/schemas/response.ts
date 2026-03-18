@@ -1,5 +1,6 @@
 import z from "zod";
 import { DogInfoSchema, DogTablePagSchema, DogTableSchema } from "./dog";
+import { error } from 'console';
 
 export const DogTableResponseSchema = z.object({
 	data: z.object({
@@ -9,7 +10,10 @@ export const DogTableResponseSchema = z.object({
 	error: z.string().optional()
 })
 
-export const DogInfoResponseSchema = z.union([DogInfoSchema, z.object({error: z.string()})])
+export const DogInfoResponseSchema = z.object({ 
+	data: DogInfoSchema.optional(), 
+	error: z.string().optional()
+})
 
 export type DogTableResponse = z.infer<typeof DogTableResponseSchema>
 export type DogInfoResponse = z.infer<typeof DogInfoResponseSchema>

@@ -19,8 +19,11 @@ jobs:
         with:
           node-version: '20' # versión de Node que usa tu proyecto
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: npm install
+        run: pnpm install
 
       - name: Run tests
-        run: npm test
+        run: pnpm test

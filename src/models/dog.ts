@@ -5,7 +5,7 @@ export class Dogs {
 
 	static async getInfoDogs (pageSize: string, pageNumber: string) {
 		try {
-			const {data, error} = await getAllDogs(pageNumber, pageSize)
+			const {data: info, error} = await getAllDogs(pageNumber, pageSize)
 			
 			if (error) throw new Error(error)
 			
@@ -14,14 +14,14 @@ export class Dogs {
 				dogs: DogTableInfo[] 
 			} = { 
 				pagination: {
-					current: data?.meta.pagination.current ?? 1,
-					first: data?.meta.pagination.first ?? 0,
-					last: data?.meta.pagination.last,
+					current: info?.meta.pagination.current ?? 1,
+					first: info?.meta.pagination.first ?? 0,
+					last: info?.meta.pagination.last,
 				}, 
 				dogs:[]
 			}
 
-			data?.data.forEach((e) => (
+			info?.data.forEach((e) => (
 				response.dogs.push({
 					id: e.id,
 					name: e.attributes.name,
@@ -30,10 +30,10 @@ export class Dogs {
 			))
 
 
-			return { data: response} 
+			return { data: response } 
 
 		} catch (error) {
-			return { error: error}
+			return { error: (error as Error).message }
 		}
 
 	}

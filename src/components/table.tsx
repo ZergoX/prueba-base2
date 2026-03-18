@@ -14,7 +14,7 @@ import {
 } from "@heroui/react";
 import Link from 'next/link';
 import { Eye } from 'lucide-react';
-import { DogPagination } from '@/models/dog';
+import { DogTableResponse } from '@/schemas/response';
 
 
 export const CustomizableTable = () => {
@@ -22,7 +22,7 @@ export const CustomizableTable = () => {
 	const [size, setSize] = useState(10)
 	const [page, setPage]= useState(1)
 	const { data: info, error, isLoading } = 
-    useSWR<{data?: { pagination: DogPagination, dogs: Record<string, string>[]}, error?: string}>(
+    useSWR<DogTableResponse>(
       `${getUrl}?pageSize=${size}&pageNumber=${page}`, 
       (url) => (axios.get(url).then((res)=> res.data)), {
 		    revalidateOnFocus: false,

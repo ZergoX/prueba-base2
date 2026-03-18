@@ -10,7 +10,7 @@ const customJestConfig = {
     testEnvironment: '@edge-runtime/jest-environment',
     setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
     moduleNameMapper: {
-        '^@/(.*)$': '<rootDir>/$1',
+        '^@/(.*)$': '<rootDir>/src/$1',
     },
 }
 
