@@ -2,38 +2,54 @@
 
 import Card from "@/components/card";
 import { DogInfoResponse } from "@/schemas/response";
-import axios from "axios";
 import { useParams } from "next/navigation";
+import Swal from "sweetalert2";
 import useSWR from "swr";
+import { useEffect } from "react";
+import { fetcher } from "@/helpers/fetcher";
 
 
 export default function DogDetails() {
   const param = useParams<{id: string}>()
 
-  const getUrl= `/api/dog/${param.id ?? 'no'}`
+  const getUrl= `/api/dog/${param.id}`
   const { data } = 
     useSWR<DogInfoResponse>(
       `${getUrl}`, 
-      (url) => (axios.get(url).then((res)=> res.data)), {
-		    revalidateOnFocus: false,
-        keepPreviousData: true
-	    }
+      fetcher
     )
-
-
-  if (!data) return ( <p> Loading... </p> )
+  
+  useEffect(() => {
+    if (data?.error) {
+      Swal.fire({
+        title: 'An error has occurred',
+        text: 'Please contact with the support service', 
+        icon: 'warning',
+        confirmButtonText: 'Ok'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          window.location.href = ('/')
+        }
+      })
+    }
+  }, [data])
     
-  if (data.error) return (<p>${data.error}</p>)
-
   return (
    <div className="flex justify-center items-center min-h-screen bg-gray-200 p-4">
-      <Card
-        title={data?.data!.name}
-        description={data?.data!.description}
-        femaleWight={data?.data!.femaleWeight}
-        maleWight={data?.data!.maleWeight}
-        life={data?.data!.life}
-        />
+      {
+        data?.data ? 
+          <Card
+          title={data?.data!.name}
+          description={data?.data!.description}
+          femaleWight={data?.data!.femaleWeight}
+          maleWight={data?.data!.maleWeight}
+          life={data?.data!.life}
+          />
+        : 
+          <div className="flex justify-center items-center">
+            <div className="w-8 h-8 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
+          </div>
+      }
     </div>
   );
 }

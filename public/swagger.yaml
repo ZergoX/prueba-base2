@@ -1,0 +1,72 @@
+
+openapi: 3.0.3
+info:
+  title: Dog API
+  version: 1.0.0
+paths:
+  /api/dog:
+    get:
+      summary: Obtener lista de perros
+      parameters:
+        - name: pageNumber
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Lista de perros
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id: { type: string }
+                        name: { type: string }
+                        description: { type: string }
+
+  /api/dog/{id}:
+    get:
+      summary: Obtener un perro por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Perro encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id: { type: string }
+                      name: { type: string }
+                      description: { type: string }
+                      life: { type: string }
+                      femaleWeight: { type: string }
+                      maleWeight: { type: string }
+        '404':
+          description: Perro no encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string

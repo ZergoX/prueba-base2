@@ -1,12 +1,10 @@
 'use client'
 import {CustomizableTable } from "@/components/table"
 
-export const DogosList = () => {
-
+export default function DogosList() {
 	return (
 		<div className="">
 			<CustomizableTable />
 		</div>
 	)
-
 }

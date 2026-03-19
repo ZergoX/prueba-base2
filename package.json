@@ -11,7 +11,6 @@
         "test:watch": "jest --watch"
     },
     "dependencies": {
-        "@heroui/react": "^2.8.10",
         "@heroui/table": "^2.2.32",
         "@supabase/supabase-js": "^2.99.2",
         "axios": "^1.13.6",
@@ -19,7 +18,11 @@
         "next": "16.1.6",
         "react": "19.2.3",
         "react-dom": "19.2.3",
+        "swagger-jsdoc": "^6.2.8",
+        "swagger-ui-react": "^5.32.1",
+        "sweetalert2": "^11.26.23",
         "swr": "^2.4.1",
+        "yamljs": "^0.3.0",
         "zod": "^4.3.6"
     },
     "devDependencies": {

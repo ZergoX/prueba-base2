@@ -1,6 +1,5 @@
 import z from "zod";
 import { DogInfoSchema, DogTablePagSchema, DogTableSchema } from "./dog";
-import { error } from 'console';
 
 export const DogTableResponseSchema = z.object({
 	data: z.object({
