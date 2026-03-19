@@ -1,4 +1,3 @@
-// --- MOCK ESTRUCTURAL ---
 var mockGetDogById = jest.fn();
 
 jest.mock('@/models/dog', () => ({
@@ -21,7 +20,6 @@ describe('GET /api/dog/[id]', () => {
     {
       desc: 'return 200 if found a dog',
       param: '3f17b92b-bd0c-499a-bc84-da8f2a206bab',
-      // IMPORTANTE: Esta es la estructura que tu ruta "destructura"
       mockResponse: {
         data: {
           id: '3f17b92b-bd0c-499a-bc84-da8f2a206bab',
@@ -48,12 +46,10 @@ describe('GET /api/dog/[id]', () => {
 
   testCases.forEach((tc) => {
     it(`${tc.desc}`, async () => {
-      // Seteamos el mock para que devuelva el objeto { data, error }
       mockGetDogById.mockResolvedValue(tc.mockResponse);
 
       const request = new NextRequest(`http://localhost/api/dog/${tc.param}`);
       
-      // Ejecutamos con params como Promesa (Next 15)
       const response = await GET(request, { 
         params: Promise.resolve({ id: tc.param }) 
       });
@@ -63,11 +59,8 @@ describe('GET /api/dog/[id]', () => {
       expect(response.status).toBe(tc.status);
 
       if (tc.status === 200) {
-        // Tu ruta hace: return NextResponse.json(data)
-        // Por lo tanto 'body' debería ser el contenido de 'mockResponse.data'
         expect(() => DogInfoResponseSchema.parse(body)).not.toThrow();
       } else {
-        // En el 404, tu ruta hace: return NextResponse.json({ error: error })
         expect(body.error).toBeDefined();
       }
     });
